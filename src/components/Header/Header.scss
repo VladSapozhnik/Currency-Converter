@@ -1,0 +1,7 @@
+.banner {
+  &_item {
+    & + & {
+      padding-left: 20px;
+    }
+  }
+}
