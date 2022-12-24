@@ -20,6 +20,7 @@ function App() {
     useEffect(() => {
         function date() {
             const now = new Date();
+
             const year = now.getFullYear();
             const month = now.getMonth() + 1;
             const date = now.getDate();
@@ -39,12 +40,12 @@ function App() {
     const actualСurrency = () => current?.filter(item => item.currency === 'USD' || item.currency === 'EUR');
 
     useEffect(() => {
-        handlerFromCurrent();
-    }, [fromCurrent])
+        handlerFromCurrent(fromPrice);
+    }, [fromCurrent, fromPrice])
 
     useEffect(() => {
-        handlerToCurrent();
-    }, [toCurrent])
+        handlerToCurrent(toPrice);
+    }, [toCurrent, toPrice])
 
     const aaa = (val) => {
         let currency;
@@ -59,8 +60,8 @@ function App() {
     }
 
     function handlerFromCurrent(value = fromPrice) {
-        let price = value * aaa(fromCurrent)
-        let result = price / aaa(toCurrent)
+        let price = value * aaa(fromCurrent);
+        let result = price / aaa(toCurrent);
         result = result.toFixed(2);
 
         setFromPrice(value);
@@ -68,8 +69,8 @@ function App() {
     }
 
     function handlerToCurrent(value = toPrice) {
-        let price = value * aaa(toCurrent)
-        let result = price / aaa(fromCurrent)
+        let price = value * aaa(toCurrent);
+        let result = price / aaa(fromCurrent);
         result = result.toFixed(2);
 
         setFromPrice(result);
@@ -81,12 +82,13 @@ function App() {
         <div className="App">
             <Header actualCurrency={actualСurrency()}/>
             <div className="container">
-                <h1 className="h1 mb-5 fw-bold" style={{fontSize: '55px'}}>h1</h1>
+                <h1 className="h1 mb-5 fw-bold" style={{fontSize: '55px'}}>Convertor</h1>
                 <div className="wrap d-flex justify-content-between align-items-center">
                     <Convertor options={fromCurrent} selectCurrent={defaultCurrent} changeCurrent={setFromCurrent}
                                value={fromPrice}
                                handlerCurrent={handlerFromCurrent}/>
-                    <Convertor options={toCurrent} selectCurrent={defaultCurrent} changeCurrent={setToCurrent} value={toPrice}
+                    <Convertor options={toCurrent} selectCurrent={defaultCurrent} changeCurrent={setToCurrent}
+                               value={toPrice}
                                handlerCurrent={handlerToCurrent}/>
                 </div>
             </div>
