@@ -1,6 +1,6 @@
 import preloading from './preloader.gif';
 import './Preloader.scss';
-function Preloading() {
+const Preloading = () => {
     return (
         <>
             <div className="preloader">

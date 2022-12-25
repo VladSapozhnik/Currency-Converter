@@ -1,6 +1,6 @@
 import CurrencyItem from "./CurrencyItem";
 
-function Convertor ({options, selectCurrent, value, changeCurrent, handlerCurrent}) {
+const Convertor = ({options, selectCurrent, value, changeCurrent, handlerCurrent}) => {
     return (
         <>
             <div className="w-50 me-3">

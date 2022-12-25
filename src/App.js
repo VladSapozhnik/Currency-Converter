@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import Preloading from "./components/Preloading/Preloading";
 import Convertor from "./components/Convertor/Convertor";
 
-function App() {
+const App = () => {
     const [current, setCurrent] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
     const defaultCurrent = ['UAH', 'USD', 'EUR'];
@@ -16,9 +16,9 @@ function App() {
     const [fromPrice, setFromPrice] = useState(1);
     const [toPrice, setToPrice] = useState(39.6);
 
-
+    function
     useEffect(() => {
-        function date() {
+        const date = () => {
             const now = new Date();
 
             const year = now.getFullYear();
@@ -39,15 +39,9 @@ function App() {
 
     const actualСurrency = () => current?.filter(item => item.currency === 'USD' || item.currency === 'EUR');
 
-    useEffect(() => {
-        handlerFromCurrent(fromPrice);
-    }, [fromCurrent, fromPrice])
 
-    useEffect(() => {
-        handlerToCurrent(toPrice);
-    }, [toCurrent, toPrice])
 
-    const aaa = (val) => {
+    const isCurrensy = (val) => {
         let currency;
 
         current.forEach(item => {
@@ -59,23 +53,31 @@ function App() {
         return currency;
     }
 
-    function handlerFromCurrent(value = fromPrice) {
-        let price = value * aaa(fromCurrent);
-        let result = price / aaa(toCurrent);
+    const handlerFromCurrent = (value = fromPrice) => {
+        let price = value * isCurrensy(fromCurrent);
+        let result = price / isCurrensy(toCurrent);
         result = result.toFixed(2);
 
         setFromPrice(value);
         setToPrice(result);
     }
 
-    function handlerToCurrent(value = toPrice) {
-        let price = value * aaa(toCurrent);
-        let result = price / aaa(fromCurrent);
+    const handlerToCurrent = (value = toPrice) => {
+        let price = value * isCurrensy(toCurrent);
+        let result = price / isCurrensy(fromCurrent);
         result = result.toFixed(2);
 
         setFromPrice(result);
         setToPrice(value);
     }
+
+    useEffect(() => {
+        handlerFromCurrent(fromPrice);
+    }, [fromCurrent])
+
+    useEffect(() => {
+        handlerToCurrent(toPrice);
+    }, [toCurrent])
 
 
     return !isFetching ? <Preloading/> : (

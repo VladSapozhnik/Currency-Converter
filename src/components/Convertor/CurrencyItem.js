@@ -1,4 +1,4 @@
-function CurrencyItem ({name, value}) {
+const CurrencyItem = ({name, value}) => {
     return <option value={value}>{name}</option>
 }
 
