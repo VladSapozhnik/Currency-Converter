@@ -1,7 +1,7 @@
 import 'bootstrap/scss/bootstrap.scss';
 import './App.scss';
 import Header from "./components/Header/Header";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import Preloading from "./components/Preloading/Preloading";
 import Convertor from "./components/Convertor/Convertor";
 
@@ -16,7 +16,6 @@ const App = () => {
     const [fromPrice, setFromPrice] = useState(1);
     const [toPrice, setToPrice] = useState(39.6);
 
-    function
     useEffect(() => {
         const date = () => {
             const now = new Date();
@@ -41,7 +40,7 @@ const App = () => {
 
 
 
-    const isCurrensy = (val) => {
+    const isCurrensy = useCallback((val) => {
         let currency;
 
         current.forEach(item => {
@@ -51,33 +50,42 @@ const App = () => {
         })
 
         return currency;
-    }
+    }, [current])
 
-    const handlerFromCurrent = (value = fromPrice) => {
+    // const handlerFromCurrent = (value = fromPrice) => {
+    //     let price = value * isCurrensy(fromCurrent);
+    //     let result = price / isCurrensy(toCurrent);
+    //     result = result.toFixed(2);
+    //
+    //     setFromPrice(value);
+    //     setToPrice(result);
+
+
+    const handlerFromCurrent = useCallback((value = fromPrice) => {
         let price = value * isCurrensy(fromCurrent);
         let result = price / isCurrensy(toCurrent);
         result = result.toFixed(2);
 
-        setFromPrice(value);
         setToPrice(result);
-    }
+        setFromPrice(value);
+    }, [fromCurrent, fromPrice, isCurrensy, toCurrent])
 
-    const handlerToCurrent = (value = toPrice) => {
+    const handlerToCurrent = useCallback((value = toPrice) => {
         let price = value * isCurrensy(toCurrent);
         let result = price / isCurrensy(fromCurrent);
         result = result.toFixed(2);
 
         setFromPrice(result);
         setToPrice(value);
-    }
-
-    useEffect(() => {
-        handlerFromCurrent(fromPrice);
-    }, [fromCurrent])
+    }, [fromCurrent, isCurrensy, toCurrent, toPrice])
 
     useEffect(() => {
         handlerToCurrent(toPrice);
     }, [toCurrent])
+
+    useEffect(() => {
+        handlerFromCurrent(fromPrice);
+    }, [fromCurrent])
 
 
     return !isFetching ? <Preloading/> : (

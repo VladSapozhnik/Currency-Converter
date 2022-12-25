@@ -7,7 +7,7 @@ const Convertor = ({options, selectCurrent, value, changeCurrent, handlerCurrent
                 <select value={options} onChange={e => changeCurrent(e.target.value)} className="form-select mb-3">
                     {selectCurrent.map(item => <CurrencyItem key={item} name={item} value={item} /> )}
                 </select>
-                <input type="number" value={value} onChange={e => handlerCurrent(+e.target.value)} className="form-control" placeholder="Current is"/>
+                <input type="number" value={value} onChange={e => handlerCurrent(Number(e.target.value))} className="form-control" placeholder="Current is"/>
             </div>
         </>
     )
